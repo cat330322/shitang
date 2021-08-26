@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccc.dao.CaigouDao">
+
+    <resultMap id="BaseResultMap" type="com.ccc.entity.Caigou">
+        <!--@Table caigou-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="leixing" column="leixing" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="many" column="many" jdbcType="VARCHAR"/>
+        <result property="danwei" column="danwei" jdbcType="VARCHAR"/>
+        <result property="danjia" column="danjia" jdbcType="VARCHAR"/>
+        <result property="zongjia" column="zongjia" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, leixing, name, many, danwei, danjia, zongjia
+        from helloworld.caigou
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, leixing, name, many, danwei, danjia, zongjia
+        from helloworld.caigou
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, leixing, name, many, danwei, danjia, zongjia
+        from helloworld.caigou
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="leixing != null and leixing != ''">
+                and leixing = #{leixing}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="many != null and many != ''">
+                and many = #{many}
+            </if>
+            <if test="danwei != null and danwei != ''">
+                and danwei = #{danwei}
+            </if>
+            <if test="danjia != null and danjia != ''">
+                and danjia = #{danjia}
+            </if>
+            <if test="zongjia != null and zongjia != ''">
+                and zongjia = #{zongjia}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into helloworld.caigou(leixing, name, many, danwei, danjia, zongjia)
+        values (#{leixing}, #{name}, #{many}, #{danwei}, #{danjia}, #{zongjia})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update helloworld.caigou
+        <set>
+            <if test="leixing != null and leixing != ''">
+                leixing = #{leixing},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="many != null and many != ''">
+                many = #{many},
+            </if>
+            <if test="danwei != null and danwei != ''">
+                danwei = #{danwei},
+            </if>
+            <if test="danjia != null and danjia != ''">
+                danjia = #{danjia},
+            </if>
+            <if test="zongjia != null and zongjia != ''">
+                zongjia = #{zongjia},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from helloworld.caigou where id = #{id}
+    </delete>
+
+</mapper>
